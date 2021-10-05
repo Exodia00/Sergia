@@ -6,6 +6,7 @@ import databaseApplication.DatabaseApp;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ClientFormApp {
@@ -13,14 +14,14 @@ public class ClientFormApp {
 // Event handlers	
 	//Add new phone
 	public static void newPhoneAction(Button btn) {
-		ClientFormCenter centerParent = (ClientFormCenter) btn.getParent().getParent();
-		btn.setOnAction(e -> centerParent.getChildren().add(new ClientFormPhoneFld()));
+		VBox centerParentContent = (VBox) btn.getParent().getParent();
+		btn.setOnAction(e -> centerParentContent.getChildren().add(new ClientFormPhoneFld()));
 	}
 	//remove this phone number
 	public static void removePhoneAction(Button btn) {
 		ClientFormPhoneFld phoneToRmv = (ClientFormPhoneFld) btn.getParent();
-		ClientFormCenter centerParent = (ClientFormCenter) phoneToRmv.getParent();
-		btn.setOnAction(e -> centerParent.getChildren().remove(phoneToRmv));
+		VBox centerParentContent = (VBox) phoneToRmv.getParent();
+		btn.setOnAction(e -> centerParentContent.getChildren().remove(phoneToRmv));
 	}
 	
 	//closing stage

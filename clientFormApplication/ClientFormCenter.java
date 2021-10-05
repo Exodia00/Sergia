@@ -9,12 +9,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class ClientFormCenter extends VBox{
-	private TextField nameFld , iceFld, addressFld;
+public class ClientFormCenter extends ScrollPane{
+	private VBox contentContainer;
+	private TextField nameFld , iceFld;
 	private ClientFormPhoneFld phoneFld;
 	private ComboBox<String> cityCB;
 	private TextArea addressArea;
@@ -59,10 +61,6 @@ public class ClientFormCenter extends VBox{
 			// Action
 		ComboBoxApp.autoCompleteOn(cityCB);
 		cityCB.getEditor().setOnAction(e -> cityCB.show());
-		// Address
-		addressFld = new TextField();
-			//Style
-		addressFld.setPromptText("Address");
 		
 		//Phone
 		phoneFld = new ClientFormPhoneFld();
@@ -71,15 +69,22 @@ public class ClientFormCenter extends VBox{
 		addressArea = new TextArea();
 			//Style
 		addressArea.setMinHeight(100);
+		addressArea.setMaxHeight(100);
 		addressArea.setMaxWidth(FLD_MAX_WIDTH+100);
+		addressArea.setPromptText("Adresse :");
 		
-	// Adding children nodes to layout
-		getChildren().addAll(nameFld , iceFld , cityCB , addressArea, phoneFld );
+	// layout 
+		contentContainer = new VBox(nameFld , iceFld , cityCB , addressArea, phoneFld);
 		
 	//Styling layout
-		setPadding(new Insets(50));
-		setSpacing(30);
-		setAlignment(Pos.TOP_CENTER);
+		contentContainer.setPadding(new Insets(50));
+		contentContainer.setSpacing(30);
+		contentContainer.setAlignment(Pos.TOP_CENTER);
+		
+	//Setting content
+		setContent(contentContainer);
+	//Styling scrollPane
+		setFitToWidth(true);
 	}
 	
 // Form Values getters
@@ -104,7 +109,7 @@ public class ClientFormCenter extends VBox{
 	}
 	// Address
 	public String getClientAddressValue() {
-		return addressFld.getText();
+		return addressArea.getText();
 	}
 
 // methods
@@ -112,7 +117,7 @@ public class ClientFormCenter extends VBox{
 	public ArrayList<Integer> getPhonesValues() {
 		ArrayList<Integer> phonesValues = new ArrayList<Integer>();
 		ArrayList<ClientFormPhoneFld> phones = new ArrayList<ClientFormPhoneFld>();
-		ObservableList<Node> childrenList = getChildren();
+		ObservableList<Node> childrenList = contentContainer.getChildren();
 		for(Node node : childrenList) {
 			if(node instanceof ClientFormPhoneFld) {
 				phones.add((ClientFormPhoneFld) node);

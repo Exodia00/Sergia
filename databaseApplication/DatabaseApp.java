@@ -197,7 +197,6 @@ public class DatabaseApp {
 	
 	// Return id of a city
 	public static int getCityId(String cityName) {
-		System.out.println(cityName);
 		int id=0;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
